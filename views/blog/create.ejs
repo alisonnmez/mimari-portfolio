@@ -1,0 +1,85 @@
+<%- include('../partials/header', { title: 'Yeni Yazı' }) %>
+
+<div class="max-w-3xl mx-auto py-12">
+    <div class="mb-8">
+        <a href="/dashboard" class="text-gray-500 hover:text-white transition-colors flex items-center gap-2 mb-4">
+            <i class="fas fa-arrow-left"></i> Panele Dön
+        </a>
+        <h1 class="text-4xl font-extrabold text-white mb-2">Yeni Blog Yazısı</h1>
+        <p class="text-gray-400">Teknik bilgi birikiminizi paylaşın.</p>
+    </div>
+
+    <% if (typeof errors != 'undefined' && errors.length > 0) { %>
+        <div class="mb-8 space-y-2">
+            <% errors.forEach(error => { %>
+                <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl flex items-center gap-3">
+                    <i class="fas fa-exclamation-circle"></i> <%= error.msg %>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+
+    <div class="bg-dark-800/50 glass-panel border border-white/10 p-8 rounded-3xl shadow-2xl">
+        <form action="/blog" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-300 mb-2">Başlık <span class="text-brand-500">*</span></label>
+                <input type="text" name="title" value="<%= formData.title || '' %>" required 
+                    class="w-full bg-dark-900 border border-dark-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all placeholder-gray-600"
+                    placeholder="Etkileyici bir başlık girin...">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-300 mb-2">Özet (Kısa Açıklama)</label>
+                <textarea name="summary" rows="3" 
+                    class="w-full bg-dark-900 border border-dark-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all placeholder-gray-600 resize-none"
+                    placeholder="Yazının kısa bir özeti (listelerde görünür)..."><%= formData.summary || '' %></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-300 mb-2">İçerik <span class="text-brand-500">*</span></label>
+                <textarea name="content" rows="12" required 
+                    class="w-full bg-dark-900 border border-dark-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all placeholder-gray-600 resize-y font-mono text-sm"
+                    placeholder="Buraya teknik içeriğinizi yazın... (Markdown desteklenmez, düz metin kullanın)"><%= formData.content || '' %></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-300 mb-2">Etiketler (Virgülle ayırın)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-600"><i class="fas fa-tags"></i></span>
+                    <input type="text" name="tags" value="<%= formData.tags || '' %>" 
+                        class="w-full bg-dark-900 border border-dark-700 text-white pl-10 pr-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all placeholder-gray-600"
+                        placeholder="mimari, veritabanı, performans">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                    <label class="block text-sm font-bold text-gray-300 mb-2">Görünürlük</label>
+                    <select name="visibility" class="w-full bg-dark-900 border border-dark-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all cursor-pointer">
+                        <option value="public">Herkese Açık (Yayınla)</option>
+                        <option value="private">Özel (Taslak)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-300 mb-2">Kapak Resmi (Maks. 5MB)</label>
+                    <label class="flex items-center justify-center w-full h-[50px] px-4 transition bg-dark-900 border-2 border-dark-700 border-dashed rounded-xl appearance-none cursor-pointer hover:border-blue-500 focus:outline-none">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-cloud-upload-alt text-gray-400"></i>
+                            <span class="text-gray-400 font-medium">Dosya Seçin...</span>
+                        </span>
+                        <input type="file" name="image" accept="image/*" class="hidden">
+                    </label>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-white/10 flex items-center justify-end gap-4">
+                <a href="/dashboard" class="px-6 py-3 bg-dark-800 text-gray-300 rounded-xl hover:bg-dark-700 transition-all font-medium">İptal</a>
+                <button type="submit" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all transform hover:scale-[1.02]">
+                    Yazıyı Yayınla <i class="fas fa-paper-plane ml-2"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

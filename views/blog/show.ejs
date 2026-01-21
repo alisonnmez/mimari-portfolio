@@ -1,0 +1,54 @@
+<%- include('../partials/header', { title: post.title }) %>
+
+<div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+        <div class="flex items-center justify-center gap-4 text-sm text-gray-500 mb-4 font-mono">
+            <span class="flex items-center gap-2"><i class="far fa-calendar-alt"></i> <%= new Date(post.createdAt).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+            <span class="text-brand-500">•</span>
+            <span class="flex items-center gap-2"><i class="far fa-user"></i> <%= post.createdBy.username %></span>
+             <span class="text-brand-500">•</span>
+            <span class="uppercase text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded text-xs font-bold"><%= post.visibility === 'public' ? 'Yayınlandı' : 'Taslak' %></span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight"><%= post.title %></h1>
+        <% if(post.summary) { %>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"><%= post.summary %></p>
+        <% } %>
+    </div>
+
+    <% if(post.imagePath) { %>
+        <div class="mb-12 rounded-3xl overflow-hidden shadow-2xl border border-white/5">
+            <img src="<%= post.imagePath %>" alt="<%= post.title %>" class="w-full object-cover">
+        </div>
+    <% } %>
+
+    <article class="prose prose-lg prose-invert max-w-none prose-headings:text-white prose-a:text-blue-400 hover:prose-a:text-blue-300 prose-strong:text-white prose-code:text-brand-400 prose-pre:bg-dark-900 prose-pre:border prose-pre:border-white/10 leading-relaxed bg-dark-800/50 p-8 md:p-12 rounded-3xl border border-white/5">
+        <%- post.content.replace(/\n/g, '<br>') %>
+    </article>
+
+    <div class="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex flex-wrap gap-2">
+            <% if(post.tags && post.tags.length > 0) { %>
+                <% post.tags.forEach(tag => { %>
+                    <span class="px-4 py-2 bg-dark-800 border border-white/10 rounded-full text-sm text-gray-300 font-mono">
+                        #<%= tag %>
+                    </span>
+                <% }) %>
+            <% } %>
+        </div>
+
+        <% if (user && (user.id == post.createdBy._id || user.role == 'admin')) { %>
+            <div class="flex gap-3">
+                <a href="/blog/<%= post._id %>/edit" class="bg-dark-800 border border-white/10 text-white px-5 py-2.5 rounded-xl text-sm hover:border-blue-500 transition-colors flex items-center gap-2">
+                    <i class="fas fa-pen"></i> Düzenle
+                </a>
+                <form action="/blog/<%= post._id %>?_method=DELETE" method="POST" class="inline">
+                    <button type="submit" onclick="return confirm('Bu yazıyı silmek istediğinize emin misiniz?')" class="bg-red-500/10 border border-red-500/20 text-red-400 px-5 py-2.5 rounded-xl text-sm hover:bg-red-500/20 transition-colors flex items-center gap-2">
+                        <i class="fas fa-trash-alt"></i> Sil
+                    </button>
+                </form>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,27 @@
+<%- include('partials/header', { title: 'Sunucu Hatası' }) %>
+
+<div class="min-h-[60vh] flex items-center justify-center text-center">
+    <div class="max-w-lg">
+        <div class="text-red-500 text-7xl mb-6 animate-pulse">
+            <i class="fas fa-server"></i>
+        </div>
+        
+        <h1 class="text-5xl font-black text-white mb-4">500 Hatası</h1>
+        <h2 class="text-2xl font-bold text-red-400 mb-4">Sunucu Tarafında Kritik Hata</h2>
+        
+        <p class="text-gray-400 mb-8 text-lg">
+            Bizim tarafımızda bir şeyler ters gitti. Mühendislerimiz durumdan haberdar edildi. Lütfen daha sonra tekrar deneyin.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+             <button onclick="location.reload()" class="bg-dark-800 border border-white/10 text-white hover:border-red-500 px-6 py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+                <i class="fas fa-sync-alt"></i> Sayfayı Yenile
+            </button>
+            <a href="/" class="bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all flex items-center justify-center gap-2">
+                <i class="fas fa-home"></i> Ana Sayfaya Dön
+            </a>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

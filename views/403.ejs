@@ -1,0 +1,24 @@
+<%- include('partials/header', { title: 'Erişim Reddedildi' }) %>
+
+<div class="min-h-[60vh] flex items-center justify-center text-center">
+    <div class="max-w-lg bg-dark-800/50 glass-panel border border-red-500/20 p-12 rounded-3xl relative overflow-hidden">
+        <div class="absolute -top-20 -left-20 w-40 h-40 bg-red-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <div class="w-24 h-24 bg-red-500/10 rounded-full flex items-center justify-center text-red-500 text-5xl mx-auto mb-6 border border-red-500/20 shadow-[0_0_30px_rgba(220,38,38,0.2)]">
+            <i class="fas fa-lock"></i>
+        </div>
+        
+        <h1 class="text-4xl font-black text-white mb-2">403 - Erişim Yasak</h1>
+        <p class="text-xl text-red-400 font-bold mb-6">Bu alana girmek için yetkiniz bulunmuyor.</p>
+        
+        <p class="text-gray-400 mb-8">
+            Bu kaynağa erişmeye çalışırken güvenlik protokolleri tetiklendi. Bu bir hata ise sistem yöneticinizle görüşün.
+        </p>
+        
+        <a href="/dashboard" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-8 py-4 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all transform hover:scale-105">
+            <i class="fas fa-shield-alt"></i> Panele Dön
+        </a>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

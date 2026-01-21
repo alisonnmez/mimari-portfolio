@@ -1,0 +1,74 @@
+<%- include('partials/header', { title: 'Ana Sayfa' }) %>
+
+<div class="text-center py-20 lg:py-32">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm font-semibold mb-8 animate-pulse">
+        <span class="w-2 h-2 rounded-full bg-brand-400"></span> Mimari Denetimler İçin Uygun
+    </div>
+    
+    <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 leading-tight">
+        Web'in Geleceğini <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-blue-500 glow-text">Tasarlıyoruz.</span>
+    </h1>
+    
+    <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400">
+        Kıdemli Yazılım Mimarı & SaaS Uzmanı. Ölçeklenebilir dijital ekosistemleri sinematik bir hassasiyetle mühendislik.
+    </p>
+
+    <div class="mt-10 flex justify-center gap-4">
+        <a href="/projects" class="group relative px-8 py-4 bg-brand-500 text-dark-900 font-bold rounded-xl overflow-hidden transition-all hover:scale-105 shadow-[0_0_40px_rgba(52,211,153,0.3)]">
+            <div class="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 origin-left"></div>
+            Çözümleri İncele <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+        <a href="/about" class="px-8 py-4 bg-dark-800 border border-dark-700 hover:border-brand-500 text-white font-semibold rounded-xl transition-all hover:bg-dark-700">
+            <i class="fas fa-user-astronaut mr-2"></i> Hakkımda
+        </a>
+    </div>
+</div>
+
+<div class="flex items-center justify-between mb-8 mt-12">
+    <h2 class="text-2xl font-bold text-white">Öne Çıkan Çalışmalar</h2>
+    <a href="/projects" class="text-sm text-brand-400 hover:text-white transition-colors">Arşivi Görüntüle &rarr;</a>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% if (projects.length > 0) { %>
+        <% projects.forEach((project, index) => { %>
+            <a href="/projects/<%= project._id %>" class="group relative bg-dark-800 border border-white/5 rounded-2xl overflow-hidden hover:border-brand-500/50 transition-all hover:shadow-[0_0_30px_rgba(16,185,129,0.1)] flex flex-col h-[400px]">
+                
+                <div class="h-48 w-full bg-dark-900 relative overflow-hidden">
+                    <% if(project.imagePath) { %>
+                        <img src="<%= project.imagePath %>" alt="<%= project.title %>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <% } else { %>
+                        <div class="absolute inset-0 bg-gradient-to-br from-dark-800 to-dark-900 flex items-center justify-center">
+                            <i class="fas fa-cube text-4xl text-dark-700 group-hover:text-brand-500 transition-colors"></i>
+                        </div>
+                    <% } %>
+                    <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md border border-white/10 text-xs font-bold text-white px-3 py-1 rounded-full">
+                        <%= project.technologies[0] || 'Web Uygulaması' %>
+                    </div>
+                </div>
+
+                <div class="p-6 flex flex-col flex-grow relative">
+                    <div class="absolute -top-10 right-6 w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                        <i class="fas fa-arrow-up-right text-dark-900 font-bold"></i>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-brand-400 transition-colors"><%= project.title %></h3>
+                    <p class="text-gray-400 text-sm line-clamp-3 mb-4"><%= project.description %></p>
+                    
+                    <div class="mt-auto flex items-center gap-2">
+                        <% project.technologies.slice(0,3).forEach(tech => { %>
+                            <span class="text-xs text-gray-500 bg-dark-900 px-2 py-1 rounded border border-white/5"><%= tech %></span>
+                        <% }) %>
+                    </div>
+                </div>
+            </a>
+        <% }) %>
+    <% } else { %>
+        <div class="col-span-full py-20 text-center border border-dashed border-gray-700 rounded-2xl">
+            <p class="text-gray-500">Sistem başlatılıyor... Henüz proje bulunamadı.</p>
+        </div>
+    <% } %>
+</div>
+
+<%- include('partials/footer') %>

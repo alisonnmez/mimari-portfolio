@@ -1,0 +1,78 @@
+<%- include('../partials/header', { title: 'Yazıyı Düzenle' }) %>
+
+<div class="max-w-3xl mx-auto py-12">
+    <div class="mb-8">
+        <a href="/blog/<%= post._id %>" class="text-gray-500 hover:text-white transition-colors flex items-center gap-2 mb-4">
+            <i class="fas fa-arrow-left"></i> Yazıya Dön
+        </a>
+        <h1 class="text-4xl font-extrabold text-white mb-2">Yazıyı Düzenle</h1>
+        <p class="text-gray-400 font-mono">ID: <%= post._id %></p>
+    </div>
+
+    <div class="bg-dark-800/50 glass-panel border border-white/10 p-8 rounded-3xl shadow-2xl">
+        <form action="/blog/<%= post._id %>?_method=PUT" method="POST" enctype="multipart/form-data" class="space-y-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-300 mb-2">Başlık <span class="text-brand-500">*</span></label>
+                <input type="text" name="title" value="<%= post.title %>" required 
+                    class="w-full bg-dark-900 border border-dark-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all">
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-300 mb-2">Özet</label>
+                <textarea name="summary" rows="3" 
+                    class="w-full bg-dark-900 border border-dark-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all resize-none"><%= post.summary %></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-300 mb-2">İçerik <span class="text-brand-500">*</span></label>
+                <textarea name="content" rows="12" required 
+                    class="w-full bg-dark-900 border border-dark-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all resize-y font-mono text-sm"><%= post.content %></textarea>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-300 mb-2">Etiketler (Virgülle ayırın)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-3.5 text-gray-600"><i class="fas fa-tags"></i></span>
+                    <input type="text" name="tags" value="<%= post.tags.join(', ') %>" 
+                        class="w-full bg-dark-900 border border-dark-700 text-white pl-10 pr-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                    <label class="block text-sm font-bold text-gray-300 mb-2">Görünürlük</label>
+                    <select name="visibility" class="w-full bg-dark-900 border border-dark-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-blue-500 transition-all cursor-pointer">
+                        <option value="public" <%= post.visibility == 'public' ? 'selected' : '' %>>Herkese Açık (Yayınla)</option>
+                        <option value="private" <%= post.visibility == 'private' ? 'selected' : '' %>>Özel (Taslak)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-300 mb-2">Yeni Kapak Resmi (Değiştirmek için)</label>
+                    <label class="flex items-center justify-center w-full h-[50px] px-4 transition bg-dark-900 border-2 border-dark-700 border-dashed rounded-xl appearance-none cursor-pointer hover:border-blue-500 focus:outline-none">
+                        <span class="flex items-center space-x-2">
+                            <i class="fas fa-cloud-upload-alt text-gray-400"></i>
+                            <span class="text-gray-400 font-medium">Dosya Seçin...</span>
+                        </span>
+                        <input type="file" name="image" accept="image/*" class="hidden">
+                    </label>
+                </div>
+            </div>
+
+            <% if(post.imagePath) { %>
+                <div class="bg-dark-900 p-4 rounded-xl border border-white/10">
+                    <p class="text-sm text-gray-400 mb-2">Mevcut Resim:</p>
+                    <img src="<%= post.imagePath %>" alt="Mevcut Resim" class="h-32 rounded-lg object-cover">
+                </div>
+            <% } %>
+
+            <div class="pt-6 border-t border-white/10 flex items-center justify-end gap-4">
+                <a href="/blog/<%= post._id %>" class="px-6 py-3 bg-dark-800 text-gray-300 rounded-xl hover:bg-dark-700 transition-all font-medium">İptal</a>
+                <button type="submit" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all transform hover:scale-[1.02]">
+                    Güncelle <i class="fas fa-save ml-2"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
