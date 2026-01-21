@@ -23,6 +23,7 @@ process.env.MONGO_URI = MONGO_URI;
 connectDB();
 
 const app = express();
+app.set('trust proxy', 1);
 
 // 3. Middleware Setup
 app.use(express.urlencoded({ extended: true }));
